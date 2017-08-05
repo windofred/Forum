@@ -13,7 +13,6 @@
 <body>
 <%@ include file="header.jsp" %>
 
-
 	<!-- 中间主体板块 -->
 	<div class="main w clearfix">
 		<div class="buttons clearfix">
@@ -59,8 +58,6 @@
 		</div>
 	</div><!-- 主体结束 -->
 
-
-
 <%@ include file="footer.jsp" %>
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/base.js"></script>
@@ -101,7 +98,6 @@
         if(hideInfo!=null && hideInfo!=""){
             registerButton.click();
         }
-
 
 		//输入校验
         //校验邮箱
