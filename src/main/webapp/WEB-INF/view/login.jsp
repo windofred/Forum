@@ -68,7 +68,7 @@
 		var lArea = $("#login-area");
 		var rArea = $("#register-area");
 		rArea.hide();
-
+	    
 		loginButton.click(function(){
 			loginButton.addClass("selected");
 			loginButton.removeClass("unselected");
@@ -118,7 +118,7 @@
                 url:"forgetPassword",
                 data:{email:$("#login-email").val()},
                 success:function(response,status,xhr){
-                    location.href="afterForgetPassword.do";
+                    location.href="afterForgetPassword";
                 }
             });
         });

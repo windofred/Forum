@@ -32,6 +32,12 @@ public class UserController {
 	@Autowired
 	private QiniuService qiniuService;
 	
+	/**
+	 * 查看我的个人主页
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/toMyProfile")
 	public String toMyProfile(HttpSession session, Model model) {
 		int sessionUid = (int) session.getAttribute("uid");

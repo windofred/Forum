@@ -2,8 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.red.mapper.PostMapper">
 
+    <resultMap type="cn.red.model.User" id="userMap">
+        <id column="uid" property="uid"></id>
+        <result column="username" property="username"></result>
+        <result column="head_url" property="headUrl"></result>
+    </resultMap>
+
+    <resultMap type="cn.red.model.Post" id="postMap">
+        <id column="pid" property="pid"/>
+        <result column="title" property="title"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="reply_time" property="replyTime"/>
+        <result column="reply_count" property="replyCount"/>
+        <result column="like_count" property="likeCount"/>
+        <result column="scan_count" property="scanCount"/>
+        <association property="user" javaType="cn.red.model.User" resultMap="userMap" />
+    </resultMap>
+
 	<select id="listPostByUid" resultType="cn.red.model.Post">
     	select uid,pid,title,publish_time from post where uid=#{uid}
 	</select>
+	
+	<!-- 获得总记录数 -->
+	<select id="selectPostCount" resultType="int">
+	   select count(*) from post
+	</select>
+	
+	<select id="listPostByTime" resultMap="postMap">
+	   select u.uid,u.username,u.head_url,p.pid,p.title,p.publish_time,p.reply_time,p.reply_count,p.like_count,p.scan_count from post p
+        join user u on p.uid = u.uid
+        order by p.reply_time desc limit #{offset},#{limit}
+	</select>
+	
+	<!-- 插入一条帖子 -->
+	<insert id="insertPost">
+	   <selectKey resultType="int" order="AFTER" keyProperty="pid">
+	       select LAST_INSERT_ID() as pid
+	   </selectKey>
+	   insert into post(title,content,publish_time,reply_time,reply_count,like_count,scan_count,uid,tid) values(#{title},
+	       #{content},#{publishTime},#{replyCount},#{likeCount},#{scanCount},#{user.uid},#{topic.tid}) 
+	</insert>
 
 </mapper>

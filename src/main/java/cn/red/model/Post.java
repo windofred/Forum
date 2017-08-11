@@ -8,8 +8,8 @@ public class Post {
 	private String publishTime;// 发布时间
 	private String replyTime;// 回帖时间
 	private Integer replyCount; // 回帖的数量
-	private Integer likeCount;
-	private Integer scanCount;
+	private Integer likeCount;// 获赞
+	private Integer scanCount;// 被浏览
 
 	private User user;// 用户
 	private Topic topic;// 主题

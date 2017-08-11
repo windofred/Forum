@@ -28,7 +28,11 @@ public class LoginService {
 	@Autowired
 	private TaskExecutor taskExecutor;
 	
-	// 登录操作
+	/**
+	 * 登录操作
+	 * @param user
+	 * @return
+	 */
 	public Map<String, Object> login(User user) {
 		Map<String, Object> map = new HashMap<>();
 		Integer uid = userMapper.selectUidByEmailAndPassword(user);
@@ -54,7 +58,12 @@ public class LoginService {
 		return map;
 	}
 	
-	// 注册操作
+	/**
+	 * 注册操作
+	 * @param user
+	 * @param repassword
+	 * @return
+	 */
 	public String register(User user, String repassword) {
 		// 校验邮箱格式
 		Pattern pattern = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$");
@@ -62,7 +71,6 @@ public class LoginService {
 		if (!matcher.matches()) {
 			return "邮箱格式有问题";
 		}
-		
 		// 校验密码长度
 		pattern = Pattern.compile("^\\w{6,20}$");
 		matcher = pattern.matcher(user.getPassword());
@@ -96,7 +104,10 @@ public class LoginService {
 		return "ok";
 	}
 	
-	// 激活
+	/**
+	 * 激活
+	 * @param activateCode 激活码
+	 */
 	public void activate(String activateCode) {
 		userMapper.updateActived(activateCode);
 	}

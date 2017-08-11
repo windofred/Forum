@@ -1,9 +1,12 @@
 package cn.red.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.red.mapper.UserMapper;
+import cn.red.model.Info;
 import cn.red.model.User;
 
 @Service
@@ -47,5 +50,35 @@ public class UserService {
 	public void updateHeadUrl(int uid, String headUrl) {
         userMapper.updateHeadUrl(uid,headUrl);
     }
+
+	/**
+	 * 记录访问信息
+	 * @param requestURL
+	 * @param contextPath
+	 * @param remoteAddr
+	 */
+	public void record(StringBuffer requestURL, String contextPath, String remoteAddr) {
+		Info info = new Info();
+		info.setRequestUrl(requestURL.toString());
+		info.setContextPath(contextPath);
+		info.setRemoteAddr(remoteAddr);
+		userMapper.insertInfo(info);
+	}
+
+	/**
+	 * 列出用户
+	 * @return
+	 */
+	public List<User> listUserByTime() {
+		return userMapper.listUserByTime();
+	}
+
+	/**
+	 * 列出热门用户
+	 * @return
+	 */
+	public List<User> listUserByHot() {
+		return userMapper.listUserByHot();
+	}
 	
 }

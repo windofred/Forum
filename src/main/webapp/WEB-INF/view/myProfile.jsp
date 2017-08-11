@@ -12,7 +12,6 @@
 <body>
 <%@ include file="header.jsp" %>
 
-
 	<!-- 中间主体板块 -->
 	<div class="main w clearfix">
 		<div class="m-left">
@@ -35,7 +34,7 @@
 					<c:forEach items="${postList}" var="post">
                         <li>
                             <span class="glyphicon glyphicon-file"></span>&nbsp;
-                            <a href="toPost.do?pid=${post.pid}">${post.title}</a>
+                            <a href="toPost?pid=${post.pid}">${post.title}</a>
                             <span class="user-post-time">发布于 ${post.publishTime}</span>
                         </li>
                     </c:forEach>

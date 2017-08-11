@@ -33,10 +33,10 @@
                                     <a href="toProfile.do?uid=${post.user.uid}"><img src="${post.user.headUrl}"></a>
                                 </div>
                                 <div class="post-content">
-                                    <div class="post-title"><a href="toPost.do?pid=${post.pid}">${post.title}</a></div>
+                                    <div class="post-title"><a href="toPost?pid=${post.pid}">${post.title}</a></div>
                                     <div class="post-other">
                                         <div class="post-other-left">
-                                            <span class="post-username"><a href="toProfile.do?uid=${post.user.uid}">${post.user.username}</a></span>
+                                            <span class="post-username"><a href="toProfile?uid=${post.user.uid}">${post.user.username}</a></span>
                                             <span>&nbsp;发表</span>
                                             <span class="post-time">&nbsp;${post.publishTime}</span>
                                             <span>&nbsp;最后回复&nbsp;</span>
@@ -62,7 +62,7 @@
                             <%--上一页--%>
                             <c:choose>
                                 <c:when test="${pageBean.curPage!=1 }">
-                                    <li><a href="listPostByTime.do?curPage=${pageBean.curPage-1 }"><span>&laquo;</span></a></li>
+                                    <li><a href="listPostByTime?curPage=${pageBean.curPage-1 }"><span>&laquo;</span></a></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><span>&laquo;</span></li>
@@ -72,36 +72,36 @@
                             <c:choose>
                                 <c:when test="${pageBean.allPage<=10 }">
                                     <c:forEach begin="1" end="${ pageBean.allPage}" var="i">
-                                        <li class="pageNum"><a href="listPostByTime.do?curPage=${i }">${i }</a></li>
+                                        <li class="pageNum"><a href="listPostByTime?curPage=${i }">${i }</a></li>
                                     </c:forEach>
                                 </c:when>
                                 <c:when test="${pageBean.curPage<=5 }">
                                     <c:forEach begin="1" end="10" var="i">
-                                        <li class="pageNum"><a href="listPostByTime.do?curPage=${i }">${i }</a></li>
+                                        <li class="pageNum"><a href="listPostByTime?curPage=${i }">${i }</a></li>
                                     </c:forEach>
                                 </c:when>
                                 <c:when test="${pageBean.allPage-pageBean.curPage<5 }">
                                     <c:forEach begin="${pageBean.allPage-9 }" end="${ pageBean.allPage}" var="i">
-                                        <li class="pageNum"><a href="listPostByTime.do?curPage=${i }">${i }</a></li>
+                                        <li class="pageNum"><a href="listPostByTime?curPage=${i }">${i }</a></li>
                                     </c:forEach>
                                 </c:when>
                                 <c:otherwise>
                                     <c:forEach begin="${pageBean.curPage-4 }" end="${ pageBean.curPage+5}" var="i">
-                                        <li class="pageNum"><a href="listPostByTime.do?curPage=${i }">${i }</a></li>
+                                        <li class="pageNum"><a href="listPostByTime?curPage=${i }">${i }</a></li>
                                     </c:forEach>
                                 </c:otherwise>
                             </c:choose>
                             <%--下一页--%>
                             <c:choose>
                                 <c:when test="${pageBean.curPage!=pageBean.allPage }">
-                                    <li><a href="listPostByTime.do?curPage=${pageBean.curPage+1 }"><span>&raquo;</span></a></li>
+                                    <li><a href="listPostByTime?curPage=${pageBean.curPage+1 }"><span>&raquo;</span></a></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><span>&raquo;</span></li>
                                 </c:otherwise>
                             </c:choose>
                             <%--尾页--%>
-                            <li><a href="listPostByTime.do?curPage=${pageBean.allPage}">尾页</a></li>
+                            <li><a href="listPostByTime?curPage=${pageBean.allPage}">尾页</a></li>
                         </ul>
                     </nav>
 
@@ -115,8 +115,8 @@
 				<ul class="hot-user-list">
 					<c:forEach items="${hotUserList}" var="user">
 						<li class="clearfix">
-							<a href="toProfile.do?uid=${user.uid}" class="hot-user-image"><img src="${user.headUrl}"></a>
-							<a href="toProfile.do?uid=${user.uid}" class="hot-user-name">${user.username}</a>
+							<a href="toProfile?uid=${user.uid}" class="hot-user-image"><img src="${user.headUrl}"></a>
+							<a href="toProfile?uid=${user.uid}" class="hot-user-name">${user.username}</a>
 						</li>
 					</c:forEach>
 				</ul>
@@ -127,8 +127,8 @@
 				<ul class="hot-user-list">
 					<c:forEach items="${userList}" var="user">
 						<li class="clearfix">
-							<a href="toProfile.do?uid=${user.uid}" class="hot-user-image"><img src="${user.headUrl}"></a>
-							<a href="toProfile.do?uid=${user.uid}" class="hot-user-name">${user.username}</a>
+							<a href="toProfile?uid=${user.uid}" class="hot-user-image"><img src="${user.headUrl}"></a>
+							<a href="toProfile?uid=${user.uid}" class="hot-user-name">${user.username}</a>
 						</li>
 					</c:forEach>
 				</ul>

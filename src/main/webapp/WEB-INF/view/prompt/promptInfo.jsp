@@ -22,6 +22,7 @@
 	<!-- 中间主体板块 -->
 	<div class="main w clearfix">
 		<div>
+		    <!-- 弹出提示信息 -->
 			${info}
 		</div>
 	</div><!-- 主体结束 -->

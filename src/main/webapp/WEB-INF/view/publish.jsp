@@ -72,7 +72,7 @@
         ];
 
         //配置处理图片上传的路径，最好用相对路径
-        editor.config.uploadImgUrl = 'upload.do';
+        editor.config.uploadImgUrl = 'upload';
         //配置图片上传到后台的参数名称
         editor.config.uploadImgFileName = 'myFileName';
         editor.create();

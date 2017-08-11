@@ -1,11 +1,15 @@
 package cn.red.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import cn.red.model.Info;
 import cn.red.model.User;
 
 public interface UserMapper {
 	
+	// 根据邮箱 和 密码 来查询用户ID
 	Integer selectUidByEmailAndPassword(User user);
 	
 	int selectActived(User user);
@@ -30,6 +34,18 @@ public interface UserMapper {
 	void updatePassword(@Param("newPassword") String newPassword, @Param("uid") int uid);
 
 	void updateHeadUrl(@Param("uid") int uid, @Param("headUrl") String headUrl);
+
+	// 记录访问信息
+	void insertInfo(Info info);
+
+	// 列出用户
+	List<User> listUserByTime();
+	
+	// 列出热门用户
+	List<User> listUserByHot();
+
+	// 更新用户的发帖数量
+	void updatePostCount(Integer uid);
 	
 	
 	
