@@ -51,7 +51,7 @@
                         <value>/forgetPassword</value>
                         <value>/afterForgetPassword</value>
                         <value>/verify</value>
-						<value>/listImage</value>
+						<!-- <value>/listImage</value> -->
                     </list>
                 </property>
             </bean>

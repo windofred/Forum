@@ -19,5 +19,11 @@ public interface PostMapper {
 
 	// 插入一条帖子
 	void insertPost(Post post);
+
+	// 获得帖子的详情信息
+	Post getPostByPid(int pid);
+
+	// 更新帖子被浏览的数量
+	void updateScanCount(int pid);
 	
 }

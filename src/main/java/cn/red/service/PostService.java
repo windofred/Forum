@@ -68,6 +68,14 @@ public class PostService {
 		
 		return post.getPid();
 	}
+
+	public Post getPostByPid(int pid) {
+		// 更新浏览数
+		postMapper.updateScanCount(pid);
+		Post post = postMapper.getPostByPid(pid);
+		
+		return post;
+	}
 	
 	
 	

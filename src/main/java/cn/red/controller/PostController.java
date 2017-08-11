@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.red.model.PageBean;
 import cn.red.model.Post;
+import cn.red.model.Reply;
 import cn.red.model.Topic;
 import cn.red.model.User;
 import cn.red.service.PostService;
+import cn.red.service.ReplyService;
 import cn.red.service.TopicService;
 import cn.red.service.UserService;
 
@@ -28,6 +30,9 @@ public class PostController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ReplyService replyService;
 
 	/**
 	 * 去发帖子的页面
@@ -58,7 +63,11 @@ public class PostController {
 	 */
 	@RequestMapping("/toPost")
 	public String toPost(int pid, Model model, HttpSession session) {
-		
+		Integer sessionUid = (Integer)session.getAttribute("uid");
+		// 获取帖子信息
+		Post post = postService.getPostByPid(pid);
+		// 获取评论信息
+		Reply reply = replyService.listReply(pid);
 		
 		return null;
 	}
