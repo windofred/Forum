@@ -7,7 +7,7 @@ public class Reply {
 	private Integer rid;
 	private String content;
 	private Post post;
-	private User uesr;
+	private User user;
 
 	private String replyTime;
 
@@ -46,12 +46,12 @@ public class Reply {
 		this.post = post;
 	}
 
-	public User getUesr() {
-		return uesr;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUesr(User uesr) {
-		this.uesr = uesr;
+	public void setUser(User uesr) {
+		this.user = uesr;
 	}
 
 	public String getReplyTime() {
@@ -73,7 +73,7 @@ public class Reply {
 	@Override
 	public String toString() {
 		return "Reply [rid=" + rid + ", content=" + content + ", post=" + post
-				+ ", uesr=" + uesr + ", replyTime=" + replyTime
+				+ ", uesr=" + user + ", replyTime=" + replyTime
 				+ ", commentList=" + commentList + "]";
 	}
 

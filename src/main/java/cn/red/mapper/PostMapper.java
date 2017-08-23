@@ -26,4 +26,15 @@ public interface PostMapper {
 	// 更新帖子被浏览的数量
 	void updateScanCount(int pid);
 	
+	int getUidByPid(int pid);
+	
+	// 根据帖子id获得帖子标题
+	String getTitleByPid(int pid);
+	
+	// 更新帖子回复的数量
+	void updateReplyCount(int pid);
+	
+	// 更新帖子回复的时间
+	void updateReplyTime(int pid);
+	
 }

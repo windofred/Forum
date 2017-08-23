@@ -77,4 +77,8 @@
 	   update user set post_count=post_count+1 where uid=#{uid}
 	</update>
 	
+	<select id="selectUsernameByUid" resultType="cn.red.model.User">
+        select uid,username from user where uid=#{uid}
+    </select>
+	
 </mapper>

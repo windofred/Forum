@@ -16,5 +16,13 @@ public class MyConstant {
 	// 域名
 	public static final String DOMAIN_NAME = "http://localhost:8080/fc/";
 	
+	//三种操作
+	// 点赞
+    public static final int OPERATION_CLICK_LIKE = 1;
+    // 回复
+    public static final int OPERATION_REPLY = 2;
+    // 评论
+    public static final int OPERATION_COMMENT = 3;
+	
 	
 }

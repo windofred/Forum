@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.red.model.PageBean;
 import cn.red.model.Post;
@@ -54,6 +55,7 @@ public class PostController {
 	@RequestMapping("/publishPost")
 	public String publishPost(Post post) {
 		int pid = postService.publishPost(post);
+		// pid表示帖子的ID
 		return "redirect:toPost?pid=" + pid;
 	}
 	
@@ -62,15 +64,24 @@ public class PostController {
 	 * @return
 	 */
 	@RequestMapping("/toPost")
-	public String toPost(int pid, Model model, HttpSession session) {
-		Integer sessionUid = (Integer)session.getAttribute("uid");
-		// 获取帖子信息
-		Post post = postService.getPostByPid(pid);
-		// 获取评论信息
-		Reply reply = replyService.listReply(pid);
-		
-		return null;
-	}
+	public String toPost(int pid, Model model, HttpSession session){
+        Integer sessionUid = (Integer) session.getAttribute("uid");
+        //获取帖子信息
+        Post post = postService.getPostByPid(pid);
+        //获取评论信息
+        List<Reply> replyList = replyService.listReply(pid);
+
+        //判断用户是否已经点赞
+        boolean liked = false;
+        if(sessionUid!=null){
+            liked = postService.getLikeStatus(pid,sessionUid);
+        }
+        //向模型中添加数据
+        model.addAttribute("post",post);
+        model.addAttribute("replyList",replyList);
+        model.addAttribute("liked",liked);
+        return "post";
+    }
 
 	/**
 	 * 按照时间列出帖子
@@ -92,5 +103,13 @@ public class PostController {
 		model.addAttribute("hotUserList", hotUserList);
 		return "index";
 	}
+	
+	//异步点赞
+    @RequestMapping(value = "/ajaxClickLike",produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String ajaxClickLike(int pid, HttpSession session){
+        int sessionUid = (int) session.getAttribute("uid");
+        return postService.clickLike(pid,sessionUid);
+    }
 
 }

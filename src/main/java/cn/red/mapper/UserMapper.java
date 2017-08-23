@@ -47,6 +47,7 @@ public interface UserMapper {
 	// 更新用户的发帖数量
 	void updatePostCount(Integer uid);
 	
-	
+	// 根据uid查找用户名
+	User selectUsernameByUid(int uid);
 	
 }

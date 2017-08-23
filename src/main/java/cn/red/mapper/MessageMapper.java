@@ -8,4 +8,5 @@ public interface MessageMapper {
 	
 	List<Message> listMessageByUid(Integer uid);
 	
+	void insertMessage(Message message);
 }

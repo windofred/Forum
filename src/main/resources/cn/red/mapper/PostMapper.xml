@@ -65,5 +65,25 @@
        join user u on p.uid = u.uid
        where p.pid=#{pid}
 	</select>
-
+    
+    <!-- 根据帖子查找用户 -->
+    <select id="getUidByPid" resultType="int">
+        select uid from post where pid=#{pid}
+    </select>
+    
+    <select id="getTitleByPid" resultType="String">
+        select title from post where pid=#{pid}
+    </select>
+    
+    <!-- 更新帖子的回复数量 -->
+    <update id="updateReplyCount">
+        update post set reply_count = reply_count + 1 where pid = #{pid}
+    </update>
+    
+    <!-- 更新帖子的回复时间 -->
+    <update id="updateReplyTime">
+        update post set reply_time = date_format(now(),'%Y-%c-%d %H:%i:%s')
+        where pid=#{pid}
+    </update>
+    
 </mapper>
