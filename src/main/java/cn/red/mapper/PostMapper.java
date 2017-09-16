@@ -9,6 +9,7 @@ import cn.red.model.Post;
 
 public interface PostMapper {
 	
+	// 根据用户id获得帖子列表
 	List<Post> listPostByUid(int uid);
 
 	// 获得总记录数

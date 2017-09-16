@@ -24,8 +24,15 @@ public class IndexController {
 	@Autowired
 	private PostService postService;
 	
+	/**
+	 * 首页
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/toIndex")
 	public String index(Model model, HttpServletRequest request) {
+		// 获取客户端的访问地址
 		System.out.println(request.getRemoteAddr());
 		// 记录访问信息
 		userService.record(request.getRequestURL(), request.getContextPath(), request.getRemoteAddr());

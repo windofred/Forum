@@ -15,7 +15,9 @@
 	<!-- 中间主体板块 -->
 	<div class="main w clearfix">
 		<div class="m-left">
+		    <!-- 用户头像 -->
 			<div class="user-image"><img src="${user.headUrl}"></div>
+			<!-- 用户基本信息 -->
 			<div class="user-info">
 				<div class="user-name">${user.username}</div>
 				<div class="user-desc">${user.description}</div>
@@ -42,6 +44,7 @@
 			</div>
 		</div>
 
+        <!-- 右边主题板块 -->
 		<div class="m-right">
 			<div class="user-follow">
 				<div class="user-follow">关注了<span class="user-count">${user.followCount}</span>人</div>
@@ -55,11 +58,13 @@
 			<div class="user-scan-count">个人主页被浏览${user.scanCount}次</div>
 		</div>
 
-	</div><!-- 主体结束 -->
+	</div>
 
-<%@ include file="footer.jsp" %>
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/base.js"></script>
+    <!-- 引入页脚页面 -->
+    <%@ include file="footer.jsp" %>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="js/base.js"></script>
+    
 </body>
 </html>
 

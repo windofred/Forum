@@ -2,6 +2,8 @@ package cn.red.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +14,26 @@ import cn.red.model.User;
 @Service
 public class UserService {
 	
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
 	
+	/**
+	 * 
+	 * @param sessionUid 会话id
+	 * @param uid 用户id
+	 * @return 用户
+	 */
 	public User getProfile(int sessionUid, int uid) {
+		// 通过uid查询用户
 		User user = userMapper.selectUserByUid(uid);
-		
 		return user;
 	}
 	
+	/**
+	 * 获得用户的编辑信息
+	 * @param uid
+	 * @return
+	 */
 	public User getEditInfo(int uid) {
 		return userMapper.selectEditInfo(uid);
 	}
@@ -28,7 +41,15 @@ public class UserService {
 	public void updateUser(User user) {
 		userMapper.updateUser(user);
 	}
-
+	
+	/**
+	 * 更新密码
+	 * @param password
+	 * @param newpassword
+	 * @param repassword
+	 * @param sessionUid
+	 * @return
+	 */
 	public String updatePassword(String password, String newpassword, String repassword, int sessionUid) {
 		String oldPassword = userMapper.selectPasswordByUid(sessionUid);
         if(!oldPassword.equals(password)){
@@ -53,9 +74,9 @@ public class UserService {
 
 	/**
 	 * 记录访问信息
-	 * @param requestURL
-	 * @param contextPath
-	 * @param remoteAddr
+	 * @param requestURL 请求的URL
+	 * @param contextPath 上下文路径
+	 * @param remoteAddr 客户端IP地址
 	 */
 	public void record(StringBuffer requestURL, String contextPath, String remoteAddr) {
 		Info info = new Info();

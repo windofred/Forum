@@ -10,7 +10,7 @@ public class MyConstant {
 	public static final String QINIU_BUCKET_NAME = "wind-red-bucket";
 	
 	
-	// 发送邮件的邮箱
+	// 发送邮件的邮箱(充当邮件服务器)
 	public static final String MAIL_FROM = "wind_of_red@163.com";
 	
 	// 域名

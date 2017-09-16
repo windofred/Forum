@@ -79,8 +79,7 @@ public class LoginController {
 	 */
 	@RequestMapping("/activate")
 	public String activate(String code, Model model) {
-		loginService.activate(code);
-		
+		loginService.activate(code);	
 		model.addAttribute("info", "您的账户已经激活成功啦，可以去登陆啦~");
 		return "prompt/promptInfo";
 	}

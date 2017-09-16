@@ -1,26 +1,31 @@
 package cn.red.model;
 
+/**
+ * UserBean
+ * @author sala
+ *
+ */
 public class User {
 
 	private Integer uid;// 用户id
 	private String email;// 用户邮箱
 	private String password;// 用户密码
-	private Integer actived;// 激活
+	private Integer actived;// 用户是否被激活
 	private String activateCode;// 激活码
-	private String joinTime;// 加入时间
+	private String joinTime;// 加入论坛时间
 
 	private String username;// 用户名
 	private String description;// 描述
-	private String headUrl;
-	private String position;// 位置
-	private String school;// 学校
-	private String job;// 工作
+	private String headUrl;// 用户头像的url(七牛云上的存储位置对应的url)
+	private String position;// 用户所在位置
+	private String school;// 用户的学校
+	private String job;// 用户的工作
 
-	private Integer likeCount;
-	private Integer postCount;
-	private Integer scanCount;
-	private Integer followCount;
-	private Integer followerCount;
+	private Integer likeCount;// 被点赞数
+	private Integer postCount;// 发帖子数
+	private Integer scanCount;// 被浏览数
+	private Integer followCount;// 关注了多少人
+	private Integer followerCount;// 关注者有多少人
 
 	public User() {
 		super();

@@ -16,6 +16,7 @@ public interface UserMapper {
 	
 	String selectHeadUrl(int uid);
 	
+	// 根据用户id查询用户
 	User selectUserByUid(int uid);
 	
 	int selectEmailCount(String email);
@@ -25,12 +26,16 @@ public interface UserMapper {
 	// 收到邮件后，“点击激活”后，就将验证码发送到服务器端，然后修改数据库中激活状态(0：未激活      1：激活)
 	void updateActived(String activateCode);
 
+	// 根据用户id获得用户的编辑信息
 	User selectEditInfo(int uid);
 
 	void updateUser(User user);
 
+	// 查询用户原来的密码
 	String selectPasswordByUid(int uid);
 
+	// 更新密码
+	// @param给参数命名
 	void updatePassword(@Param("newPassword") String newPassword, @Param("uid") int uid);
 
 	void updateHeadUrl(@Param("uid") int uid, @Param("headUrl") String headUrl);

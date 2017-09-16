@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,13 @@ import cn.red.util.MyConstant;
 @Controller
 public class UserController {
 	
-	@Autowired
+	@Resource
 	private UserService userService;
 	
-	@Autowired
+	@Resource
 	private PostService postService;
 	
-	@Autowired
+	@Resource
 	private QiniuService qiniuService;
 	
 	/**
@@ -41,12 +42,14 @@ public class UserController {
 	@RequestMapping("/toMyProfile")
 	public String toMyProfile(HttpSession session, Model model) {
 		int sessionUid = (int) session.getAttribute("uid");
+		// 获得用户的个人信息
 		User user = userService.getProfile(sessionUid, sessionUid);
+		// 获得用户所发的帖子列表
 		List<Post> postList = postService.getPostList(sessionUid);
+		// 添加用户个人信息到model对象中
 		model.addAttribute("user", user);
 		model.addAttribute("postList", postList);
 		return "myProfile";
-		
 	}
 	
 	// 去编辑信息的页面
@@ -66,12 +69,21 @@ public class UserController {
 		return "redirect:toMyProfile";
 	}
 	
-	// 修改密码
+	/**
+	 * 修改密码
+	 * @param password 原密码
+	 * @param newpassword 新密码
+	 * @param repassword 确认
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/updatePassword")
 	public String updatePassword(String password, String newpassword, String repassword, HttpSession session, Model model) {
 		int sessionUid = (int) session.getAttribute("uid");
 		String status = userService.updatePassword(password, newpassword, repassword, sessionUid);
 		if (status.equals("ok")) {
+			// 重定向到logout页面
 			return "redirect:logout";
 		} else {
 			model.addAttribute("passwordError", status);
@@ -79,6 +91,14 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * 更换头像
+	 * @param myFileName
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping("/updateHeadUrl")
     public String updateHeadUrl(MultipartFile myFileName,Model model,HttpSession session) throws IOException {
         // 文件类型限制
@@ -86,6 +106,7 @@ public class UserController {
         boolean allowed = Arrays.asList(allowedType).contains(myFileName.getContentType());
         if (!allowed) {
             model.addAttribute("error3","图片格式仅限bmp，jpg，png，gif~");
+            // 返回到信息编辑页面
             return "editProfile";
         }
         // 图片大小限制

@@ -14,6 +14,7 @@
 		SELECT head_url from user where uid = #{uid}
 	</select>
 	
+	<!-- 根据用户id查询用户 -->
 	<select id="selectUserByUid" resultType="cn.red.model.User">
 		select uid,username,description,position,school,job,head_url,follow_count,follower_count,like_count,post_count,scan_count
         from user
@@ -34,6 +35,7 @@
 		update user set actived=1 where activate_code=#{activateCode}
 	</update>
 	
+	<!-- 根据用户id获得用户的编辑信息 -->
 	<select id="selectEditInfo" resultType="cn.red.model.User">
 		select uid,username,description,position,school,job
 		from user
@@ -49,6 +51,7 @@
 		select password from user where uid=#{uid}
 	</select>
 	
+	<!-- 更新用户密码 -->
 	<update id="updatePassword">
 		update user set password=#{newPassword} where uid=#{uid}
 	</update>

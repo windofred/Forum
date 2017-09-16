@@ -36,11 +36,13 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:spring-mvc.xml</param-value>
 		</init-param>
+		<!-- 表示启动容器时初始化该Servlet -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>spring-mvc</servlet-name>
+		<!-- /是用来定义默认servlet映射的 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	

@@ -3,6 +3,8 @@ package cn.red.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
@@ -22,29 +24,34 @@ import cn.red.util.MyUtil;
 @Service
 public class PostService {
 	
-	@Autowired
+	@Resource
 	private PostMapper postMapper;
 	
-	@Autowired
+	@Resource
 	private UserMapper userMapper;
 	
-	@Autowired
+	@Resource
     private MessageMapper messageMapper;
 	
-	@Autowired
+	@Resource
     private ReplyMapper replyMapper;
 	
-	@Autowired
+	@Resource
 	private JedisPool jedisPool;
 	
-	@Autowired
+	@Resource
 	private TaskExecutor taskExecutor;
 	
-	// 获得帖子列表
+	// 根据用户id获得帖子列表
 	public List<Post> getPostList(int uid) {
 		return postMapper.listPostByUid(uid);
 	}
 
+	/**
+	 * 按时间列出帖子(分页功能的实现)
+	 * @param curPage 当前页
+	 * @return
+	 */
 	public PageBean<Post> listPostByTime(int curPage) {
 		// 每页记录数，从哪开始
 		int limit = 8;
@@ -53,7 +60,7 @@ public class PostService {
 		int allCount = postMapper.selectPostCount();
 		int allPage = 0;
 		if (allCount <= limit) {
-			allPage = 1;
+			allPage = 1;// 只有1页
 		} else if (allCount / limit == 0) {
 			allPage = allCount / limit;
 		} else {
@@ -61,16 +68,20 @@ public class PostService {
 		}
 		// 分页得到数据列表
 		List<Post> postList = postMapper.listPostByTime(offset, limit);
+		// 从线程池获得一个jedis连接对象
 		Jedis jedis = jedisPool.getResource();
 		for (Post post : postList) {
+			// 设置帖子的点赞数
+			// 返回集合中元素的数量
+			// 点赞数刷到redis数据库
 			post.setLikeCount((int)(long)jedis.scard(post.getPid() + ":like"));
 		}
-		
 		// 构造PageBean
 		PageBean<Post> pageBean = new PageBean<Post>(allPage, curPage);
 		pageBean.setList(postList);
 		
 		if (jedis != null) {
+			// 释放连接对象
 			jedisPool.returnResource(jedis);
 		}
 		return pageBean;
@@ -115,7 +126,7 @@ public class PostService {
 	//点赞
     public String clickLike(int pid, int sessionUid) {
         Jedis jedis = jedisPool.getResource();
-        //pid被sessionUid点赞
+        //pid(帖子id)被sessionUid点赞
         jedis.sadd(pid+":like", String.valueOf(sessionUid));
         //增加用户获赞数
         jedis.hincrBy("vote",sessionUid+"",1);

@@ -31,19 +31,24 @@
         <association property="user" javaType="cn.red.model.User" resultMap="userMap" />
     </resultMap>
 
+    <!-- 根据用户id获得帖子列表 -->
 	<select id="listPostByUid" resultType="cn.red.model.Post">
     	select uid,pid,title,publish_time from post where uid=#{uid}
 	</select>
 	
-	<!-- 获得总记录数 -->
+	<!-- 获得帖子的总记录数 -->
 	<select id="selectPostCount" resultType="int">
 	   select count(*) from post
 	</select>
 	
+	<!-- 按照时间列出帖子
+	    limit 每页的数量
+	    offset 偏移量，从0开始
+	 -->
 	<select id="listPostByTime" resultMap="postMap">
 	   select u.uid,u.username,u.head_url,p.pid,p.title,p.publish_time,p.reply_time,p.reply_count,p.like_count,p.scan_count from post p
-        join user u on p.uid = u.uid
-        order by p.reply_time desc limit #{offset},#{limit}
+       join user u on p.uid = u.uid
+       order by p.reply_time desc limit #{offset},#{limit}
 	</select>
 	
 	<!-- 插入一条帖子 -->
