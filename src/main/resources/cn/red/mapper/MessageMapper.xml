@@ -3,12 +3,12 @@
 <mapper namespace="cn.red.mapper.MessageMapper">
 
 	<select id="listMessageByUid" resultType="cn.red.model.Message">
-        select * from message where uid=#{uid}
+        SELECT * FROM message WHERE uid=#{uid}
     </select>
     
     <insert id="insertMessage">
-        insert into message(uid,other_id,other_username,operation,post_id,displayed_content)
-        values(#{uid},#{otherId},#{otherUsername},#{operation},#{postId},#{displayedContent})
+        INSERT INTO message(uid,other_id,other_username,operation,post_id,displayed_content)
+        VALUES(#{uid},#{otherId},#{otherUsername},#{operation},#{postId},#{displayedContent})
     </insert>
 
 </mapper>

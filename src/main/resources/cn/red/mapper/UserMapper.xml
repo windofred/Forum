@@ -3,86 +3,86 @@
 <mapper namespace="cn.red.mapper.UserMapper">
 	<!-- 根据邮箱 和 密码 来查询用户ID -->
 	<select id="selectUidByEmailAndPassword" resultType="int">
-		select uid from user where email = #{email} and password = #{password}
+		SELECT uid FROM user WHERE email = #{email} AND password = #{password}
 	</select>
 	
 	<select id="selectActived" resultType="int">
-		select actived from user where email = #{email}
+		SELECT actived FROM user WHERE email = #{email}
 	</select>
 	
 	<select id="selectHeadUrl" resultType="String">
-		SELECT head_url from user where uid = #{uid}
+		SELECT head_url FROM user WHERE uid = #{uid}
 	</select>
 	
 	<!-- 根据用户id查询用户 -->
 	<select id="selectUserByUid" resultType="cn.red.model.User">
-		select uid,username,description,position,school,job,head_url,follow_count,follower_count,like_count,post_count,scan_count
-        from user
-        where uid=#{uid}
+		SELECT uid,username,description,position,school,job,head_url,follow_count,follower_count,like_count,post_count,scan_count
+        FROM user
+        WHERE uid=#{uid}
 	</select>
 	
 	<!-- 用于判断邮箱是否已被注册 -->
 	<select id="selectEmailCount" resultType="int">
-		select count(*) from user where uid = #{uid}
+		SELECT count(*) FROM user WHERE uid = #{uid}
 	</select>
 	
 	<insert id="insertUser">
-		insert into user(email,password,actived,activate_code,join_time,username,head_url)
-        values(#{email},#{password},#{actived},#{activateCode},#{joinTime},#{username},#{headUrl})
+		INSERT INTO user(email,password,actived,activate_code,join_time,username,head_url)
+        VALUES(#{email},#{password},#{actived},#{activateCode},#{joinTime},#{username},#{headUrl})
 	</insert>
 	
 	<!-- 更新激活码，是用户激活码更改为1 -->
 	<update id="updateActived">
-		update user set actived=1 where activate_code=#{activateCode}
+		UPDATE user SET actived=1 WHERE activate_code=#{activateCode}
 	</update>
 	
 	<!-- 根据用户id获得用户的编辑信息 -->
 	<select id="selectEditInfo" resultType="cn.red.model.User">
-		select uid,username,description,position,school,job
-		from user
-		where uid = #{uid}
+		SELECT uid,username,description,position,school,job
+		FROM user
+		WHERE uid = #{uid}
 	</select>
 	
 	<update id="updateUser">
-		update user set username=#{username},description=#{description},position=#{position},school=#{school},job=#{job}
-        where uid=#{uid}
+		UPDATE user SET username=#{username},description=#{description},position=#{position},school=#{school},job=#{job}
+        WHERE uid=#{uid}
 	</update>
 	
 	<select id="selectPasswordByUid" resultType="String">
-		select password from user where uid=#{uid}
+		SELECT password FROM user WHERE uid=#{uid}
 	</select>
 	
 	<!-- 更新用户密码 -->
 	<update id="updatePassword">
-		update user set password=#{newPassword} where uid=#{uid}
+		UPDATE user SET password=#{newPassword} WHERE uid=#{uid}
 	</update>
 	
 	<update id="updateHeadUrl">
-		update user set head_url=#{headUrl} where uid=#{uid}
+		UPDATE user SET head_url=#{headUrl} WHERE uid=#{uid}
 	</update>
 	
 	<!-- 记录访问信息 -->
 	<insert id="insertInfo">
-	   insert into info values(null, #{requestUrl}, #{contextPath}, #{remoteAddr}, null)
+	   INSERT INTO info VALUES(null, #{requestUrl}, #{contextPath}, #{remoteAddr}, null)
 	</insert>
 	
 	<!-- 列出用户 -->
 	<select id="listUserByTime" resultType="cn.red.model.User">
-	   select uid,username,head_url from user order by join_time desc limit 6 
+	   SELECT uid,username,head_url FROM user ORDER BY join_time DESC LIMIT 6 
 	</select>
 	
 	<!-- 列出热门用户 -->
 	<select id="listUserByHot" resultType="cn.red.model.User">
-	   select uid,username,head_url from user order by post_count desc limit 6
+	   SELECT uid,username,head_url FROM user ORDER BY post_count DESC LIMIT 6
 	</select>
 	
 	<!-- 更新用户的发帖数量 -->
 	<update id="updatePostCount">
-	   update user set post_count=post_count+1 where uid=#{uid}
+	   UPDATE user SET post_count=post_count+1 WHERE uid=#{uid}
 	</update>
 	
 	<select id="selectUsernameByUid" resultType="cn.red.model.User">
-        select uid,username from user where uid=#{uid}
+        SELECT uid,username FROM user WHERE uid=#{uid}
     </select>
 	
 </mapper>

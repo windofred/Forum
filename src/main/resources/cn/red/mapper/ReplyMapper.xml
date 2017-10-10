@@ -21,27 +21,27 @@
     </resultMap>
 
     <select id="getContentByRid" resultType="String">
-        select content from reply where rid=#{rid}
+        SELECT content FROM reply WHERE rid=#{rid}
     </select>
     
     <select id="listReply" resultMap="replyMap">
-        select r.rid,r.content,u.uid,u.username,u.head_url from reply r join user u on r.uid=u.uid
-        where pid=#{pid}
+        SELECT r.rid,r.content,u.uid,u.username,u.head_url FROM reply r JOIN user u ON r.uid=u.uid
+        WHERE pid=#{pid}
     </select>
     
     <select id="listComment" resultMap="commentMap">
-        select c.cid,c.content,u.uid,u.username,u.head_url from comment c join user u on c.uid=u.uid
-        where rid=#{rid}
+        SELECT c.cid,c.content,u.uid,u.username,u.head_url FROM comment c JOIN user u ON c.uid=u.uid
+        WHERE rid=#{rid}
     </select>
     
     <!-- 插入回复记录 -->
     <insert id="insertReply">
-        insert into reply(content,uid,pid,reply_time) values(#{content},#{user.uid},#{post.pid},date_format(now(),'%Y-%c-%d %H:%i:%s'))
+        INSERT INTO reply(content,uid,pid,reply_time) values(#{content},#{user.uid},#{post.pid},date_format(now(),'%Y-%c-%d %H:%i:%s'))
     </insert>
     
     <!-- 插入评论 -->
     <insert id="insertComment">
-        insert into comment(content,uid,rid,comment_time) values(#{content},#{user.uid},#{reply.rid},date_format(now(),'%Y-%c-%d %H:%i:%s'))
+        INSERT INTO comment(content,uid,rid,comment_time) VALUES(#{content},#{user.uid},#{reply.rid},date_format(now(),'%Y-%c-%d %H:%i:%s'))
     </insert>
 
 </mapper>

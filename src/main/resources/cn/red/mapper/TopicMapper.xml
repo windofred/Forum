@@ -3,11 +3,11 @@
 <mapper namespace="cn.red.mapper.TopicMapper">
 
 	<select id="listTopic" resultType="cn.red.model.Topic">
-    	select tid,name,content,image from topic
+    	SELECT tid,name,content,image FROM topic
 	</select>
 	
 	<select id="listImage" resultType="String">
-		select image_url from image
+		SELECT image_url FROM image
 	</select>
 
 </mapper>

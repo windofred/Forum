@@ -35,14 +35,12 @@
 
 	<!-- 根据用户id获得帖子列表 -->
 	<select id="listPostByUid" resultType="cn.red.model.Post">
-		SELECT
-		uid,pid,title,publish_time FROM post WHERE uid=#{uid}
+		SELECT uid,pid,title,publish_time FROM post WHERE uid=#{uid}
 	</select>
 
 	<!-- 获得帖子的总记录数 -->
 	<select id="selectPostCount" resultType="int">
-		SELECT count(*) FROM
-		post
+		SELECT count(*) FROM post
 	</select>
 
 	<!-- 按照时间列出帖子 limit 每页的数量 offset 偏移量，从0开始 -->
