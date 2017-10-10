@@ -2,93 +2,106 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.red.mapper.PostMapper">
 
-    <resultMap type="cn.red.model.User" id="userMap">
-        <id column="uid" property="uid"></id>
-        <result column="username" property="username"></result>
-        <result column="head_url" property="headUrl"></result>
-    </resultMap>
+	<resultMap type="cn.red.model.User" id="userMap">
+		<id column="uid" property="uid"></id>
+		<result column="username" property="username"></result>
+		<result column="head_url" property="headUrl"></result>
+	</resultMap>
 
-    <resultMap type="cn.red.model.Post" id="postMap">
-        <id column="pid" property="pid"/>
-        <result column="title" property="title"/>
-        <result column="publish_time" property="publishTime"/>
-        <result column="reply_time" property="replyTime"/>
-        <result column="reply_count" property="replyCount"/>
-        <result column="like_count" property="likeCount"/>
-        <result column="scan_count" property="scanCount"/>
-        <association property="user" javaType="cn.red.model.User" resultMap="userMap" />
-    </resultMap>
-    
-    <resultMap type="cn.red.model.Post" id="post2Map">
-        <id column="pid" property="pid"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <result column="publish_time" property="publishTime"/>
-        <result column="reply_time" property="replyTime"/>
-        <result column="reply_count" property="replyCount"/>
-        <result column="like_count" property="likeCount"/>
-        <result column="scan_count" property="scanCount"/>
-        <association property="user" javaType="cn.red.model.User" resultMap="userMap" />
-    </resultMap>
+	<resultMap type="cn.red.model.Post" id="postMap">
+		<id column="pid" property="pid" />
+		<result column="title" property="title" />
+		<result column="publish_time" property="publishTime" />
+		<result column="reply_time" property="replyTime" />
+		<result column="reply_count" property="replyCount" />
+		<result column="like_count" property="likeCount" />
+		<result column="scan_count" property="scanCount" />
+		<association property="user" javaType="cn.red.model.User"
+			resultMap="userMap" />
+	</resultMap>
 
-    <!-- 根据用户id获得帖子列表 -->
+	<resultMap type="cn.red.model.Post" id="post2Map">
+		<id column="pid" property="pid" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="publish_time" property="publishTime" />
+		<result column="reply_time" property="replyTime" />
+		<result column="reply_count" property="replyCount" />
+		<result column="like_count" property="likeCount" />
+		<result column="scan_count" property="scanCount" />
+		<association property="user" javaType="cn.red.model.User"
+			resultMap="userMap" />
+	</resultMap>
+
+	<!-- 根据用户id获得帖子列表 -->
 	<select id="listPostByUid" resultType="cn.red.model.Post">
-    	select uid,pid,title,publish_time from post where uid=#{uid}
+		SELECT
+		uid,pid,title,publish_time FROM post WHERE uid=#{uid}
 	</select>
-	
+
 	<!-- 获得帖子的总记录数 -->
 	<select id="selectPostCount" resultType="int">
-	   select count(*) from post
+		SELECT count(*) FROM
+		post
 	</select>
-	
-	<!-- 按照时间列出帖子
-	    limit 每页的数量
-	    offset 偏移量，从0开始
-	 -->
+
+	<!-- 按照时间列出帖子 limit 每页的数量 offset 偏移量，从0开始 -->
 	<select id="listPostByTime" resultMap="postMap">
-	   select u.uid,u.username,u.head_url,p.pid,p.title,p.publish_time,p.reply_time,p.reply_count,p.like_count,p.scan_count from post p
-       join user u on p.uid = u.uid
-       order by p.reply_time desc limit #{offset},#{limit}
+		SELECT
+		u.uid,u.username,u.head_url,p.pid,p.title,p.publish_time,p.reply_time,p.reply_count,p.like_count,p.scan_count
+		FROM post p
+		JOIN user u on p.uid = u.uid
+		ORDER BY p.reply_time DESC
+		LIMIT #{offset},#{limit}
 	</select>
-	
+
 	<!-- 插入一条帖子 -->
 	<insert id="insertPost">
-	   <selectKey resultType="int" order="AFTER" keyProperty="pid">
-	       select LAST_INSERT_ID() as pid
-	   </selectKey>
-	   insert into post(title,content,publish_time,reply_time,reply_count,like_count,scan_count,uid,tid) values(#{title},
-	       #{content},#{publishTime},#{replyCount},#{likeCount},#{scanCount},#{user.uid},#{topic.tid}) 
+		<selectKey resultType="int" order="AFTER" keyProperty="pid">
+			SELECT last_insert_id() AS pid
+		</selectKey>
+		INSERT INTO
+		post(title,content,publish_time,reply_time,reply_count,like_count,scan_count,uid,tid)
+		VALUES(#{title},
+		#{content},#{publishTime},#{replyTime},#{replyCount},#{likeCount},#{scanCount},#{user.uid},#{topic.tid})
 	</insert>
-	
+
 	<!-- 更新帖子被浏览的数量 -->
 	<update id="updateScanCount">
-	   update post set scan_count=scan_count+1 where pid=#{pid}
+		UPDATE post SET scan_count=scan_count+1 WHERE
+		pid=#{pid}
 	</update>
-	
+
 	<select id="getPostByPid" resultMap="post2Map">
-	   select u.uid,u.username,u.head_url,p.pid,p.title,p.content,p.publish_time,p.reply_time,p.reply_count,p.like_count,p.scan_count from post p
-       join user u on p.uid = u.uid
-       where p.pid=#{pid}
+		SELECT
+		u.uid,u.username,u.head_url,p.pid,p.title,p.content,p.publish_time,p.reply_time,p.reply_count,p.like_count,p.scan_count
+		FROM post p
+		JOIN user u on p.uid = u.uid
+		WHERE p.pid=#{pid}
 	</select>
-    
-    <!-- 根据帖子查找用户 -->
-    <select id="getUidByPid" resultType="int">
-        select uid from post where pid=#{pid}
-    </select>
-    
-    <select id="getTitleByPid" resultType="String">
-        select title from post where pid=#{pid}
-    </select>
-    
-    <!-- 更新帖子的回复数量 -->
-    <update id="updateReplyCount">
-        update post set reply_count = reply_count + 1 where pid = #{pid}
-    </update>
-    
-    <!-- 更新帖子的回复时间 -->
-    <update id="updateReplyTime">
-        update post set reply_time = date_format(now(),'%Y-%c-%d %H:%i:%s')
-        where pid=#{pid}
-    </update>
-    
+
+	<!-- 根据帖子查找用户 -->
+	<select id="getUidByPid" resultType="int">
+		SELECT uid FROM post WHERE
+		pid=#{pid}
+	</select>
+
+	<select id="getTitleByPid" resultType="String">
+		SELECT title from post
+		WHERE pid=#{pid}
+	</select>
+
+	<!-- 更新帖子的回复数量 -->
+	<update id="updateReplyCount">
+		UPDATE post SET reply_count = reply_count + 1 WHERE
+		pid = #{pid}
+	</update>
+
+	<!-- 更新帖子的回复时间 -->
+	<update id="updateReplyTime">
+		UPDATE post SET reply_time =
+		date_format(now(),'%Y-%c-%d %H:%i:%s')
+		WHERE pid=#{pid}
+	</update>
+
 </mapper>

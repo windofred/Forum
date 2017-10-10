@@ -2,6 +2,7 @@ package cn.red.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,14 @@ import cn.red.service.UserService;
 @Controller
 public class IndexController {
 	
-	@Autowired
+	@Resource
 	private UserService userService;
 	
-	@Autowired
+	@Resource
 	private PostService postService;
 	
 	/**
-	 * 首页
+	 * 去首页
 	 * @param model
 	 * @param request
 	 * @return

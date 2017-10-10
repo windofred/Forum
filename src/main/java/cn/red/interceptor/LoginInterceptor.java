@@ -9,12 +9,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
+ * 
  * 登录拦截器
  * @author sala
  *
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
+	// 不被拦截的url
 	private List<String> excludedUrls;
 
 	@Override

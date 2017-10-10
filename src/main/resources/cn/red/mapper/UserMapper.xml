@@ -31,6 +31,7 @@
         values(#{email},#{password},#{actived},#{activateCode},#{joinTime},#{username},#{headUrl})
 	</insert>
 	
+	<!-- 更新激活码，是用户激活码更改为1 -->
 	<update id="updateActived">
 		update user set actived=1 where activate_code=#{activateCode}
 	</update>

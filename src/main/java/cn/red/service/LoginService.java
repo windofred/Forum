@@ -84,6 +84,7 @@ public class LoginService {
 		}
 		
 		// 检查邮箱是否已经被注册
+		// 统计相同email的数量
 		int emailCount = userMapper.selectEmailCount(user.getEmail());
 		if (emailCount > 0) {
 			return "该邮箱已经被注册";
